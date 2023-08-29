@@ -1,5 +1,5 @@
 import { useNavigation } from "@react-navigation/native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   KeyboardAvoidingView,
   StatusBar,
@@ -11,11 +11,31 @@ import {
   Pressable,
 } from "react-native";
 import { Input } from "react-native-elements";
+import {signInWithEmailAndPassword} from 'firebase/auth'
+import auth from "../../Firebase";
 
 const Login = () => {
   const [email, setemail] = useState("");
   const [password, setpassword] = useState("");
   const navigate = useNavigation();
+
+  useEffect(()=>{
+    const unsubscribe = auth.onAuthStateChanged((user)=>{
+      if(user){
+        navigate.navigate('Profile')
+      }
+    },[])
+    return unsubscribe
+  })
+
+  const subscribe = () =>{
+    signInWithEmailAndPassword(auth,email,password)
+    .then((userCredentials) => {
+      console.log(userCredentials)
+      const user = userCredentials.user;
+      console.log(user.email)
+    })
+  }
 
   return (
     <SafeAreaView style={styles.container}>
@@ -66,7 +86,7 @@ const Login = () => {
         </View>
         {console.log(email)}
 
-        <Pressable
+        <Pressable onPress={subscribe}
           style={
             password.length > 4
               ? {

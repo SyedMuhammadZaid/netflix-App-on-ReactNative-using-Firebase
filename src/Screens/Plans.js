@@ -5,6 +5,7 @@ import {
   View,
   StatusBar,
   ScrollView,
+  Alert,
 } from "react-native";
 import React from "react";
 import { SafeAreaView } from "react-native";
@@ -12,6 +13,11 @@ import { Feather } from "@expo/vector-icons";
 import { Fontisto, Entypo } from "@expo/vector-icons";
 import plandata from "../data/plandata";
 import { useState } from "react";
+import auth from "../../Firebase";
+import { useRoute } from "@react-navigation/native";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+
+// import { useStripe } from "@stripe/stripe-react-native";
 
 const Plans = () => {
   const [selectedplan, setplan] = useState("");
@@ -20,6 +26,44 @@ const Plans = () => {
   console.log(selectedplan);
   console.log(selectedprice);
 
+  const route = useRoute();
+  const { email, password } = route.params;
+
+  console.log('Email:', email);
+  console.log('Password:', password);
+  
+
+
+  // const stripe = useStripe()
+  const subscribe = async() => {
+    createUserWithEmailAndPassword(auth,email,password)
+    .then((userCredentials) => {
+      console.log(userCredentials)
+      const user = userCredentials.user;
+      console.log(user.email)
+    })
+  //   const response = await fetch("http:localhost:8000/payment",{
+  //     method:"POST",
+  //     body: JSON.stringify({
+  //       amount:selectedprice
+  //     }),
+  //     headers:{
+  //       "Content-Type":"application/json",
+  //     }
+  //   });
+  //   const data = await response.json();
+  //   console.log(data);
+  //   if(!response.ok) return Alert.alert(data.message);
+  //   const clientSecret = data.clientSecret;
+  //   const initSheet = await stripe.initPaymentSheet({
+  //     paymentIntentClientSecret: clientSecret,
+  //   });
+  // if (initSheet.error) return Alert.alert(initSheet.error.message);
+  // const presentSheet = await stripe.presentPaymentSheet({
+  //   clientSecret
+  // });
+  // if (presentSheet.error) return Alert.alert(presentSheet.error.message);
+  }  
   return (
     <>
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -95,9 +139,9 @@ const Plans = () => {
                           margin: 10,
                         }
                   }
-                  key={item.index}
+                  
                 >
-                  <View
+                  <View key={item.index}
                     style={{
                       flexDirection: "row",
                       justifyContent: "space-between",
@@ -176,7 +220,7 @@ const Plans = () => {
       </ScrollView>
 
       {plandisplay && (
-      <Pressable>
+      <Pressable onPress={subscribe}>
         <View
           style={{
             backgroundColor: "#D0312D",

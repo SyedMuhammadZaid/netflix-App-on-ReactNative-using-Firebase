@@ -70,6 +70,7 @@ const Register = () => {
           />
         </View>
 
+      
         <Pressable style={
             password.length > 4 ? 
             {
@@ -97,13 +98,12 @@ const Register = () => {
             borderColor: "white",
        }
         }
-        onPress={()=>
-            {navigate.navigate('Plans'),
-            {
-                email:email,
-                password:password
-            }
-        }
+        disabled={email.length === 0 || password.length < 4}
+        onPress={() =>
+          navigate.navigate('Plans', {
+            email: email,
+            password: password
+          })
         }
         >
             <Text style={{color:'white'}}>Register</Text>
