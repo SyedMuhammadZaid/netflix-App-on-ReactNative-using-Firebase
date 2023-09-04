@@ -6,6 +6,8 @@ import Login from './src/Screens/Login';
 import Register from './src/Screens/Register';
 import Plans from './src/Screens/Plans';
 import Profile from './src/Screens/Profile';
+import Loading from './src/Screens/Loading';
+import Home from './src/Screens/Home';
 
 
 const StackNavigator = () => {
@@ -17,6 +19,8 @@ const StackNavigator = () => {
         <Stack.Screen name="Register" component={Register} options={{headerShown:false}} />
         <Stack.Screen name="Plans" component={Plans} options={{headerShown:false}} />
         <Stack.Screen name="Profile" component={Profile} options={{headerShown:false}} />
+        <Stack.Screen name="Loading" component={Loading} options={{headerShown:false}} />
+        <Stack.Screen name="Home" component={Home} options={{headerShown:false}} />
 
       </Stack.Navigator>
     </NavigationContainer>

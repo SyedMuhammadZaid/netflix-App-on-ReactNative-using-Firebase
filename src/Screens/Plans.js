@@ -15,6 +15,7 @@ import plandata from "../data/plandata";
 import { useState } from "react";
 import auth from "../../Firebase";
 import { useRoute } from "@react-navigation/native";
+import { useNavigation } from "@react-navigation/native";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 
 // import { useStripe } from "@stripe/stripe-react-native";
@@ -23,6 +24,7 @@ const Plans = () => {
   const [selectedplan, setplan] = useState("");
   const [selectedprice, setprice] = useState("");
   const [plandisplay, setdisplay] = useState(false);
+  const navigate = useNavigation();
   console.log(selectedplan);
   console.log(selectedprice);
 
@@ -42,6 +44,8 @@ const Plans = () => {
       const user = userCredentials.user;
       console.log(user.email)
     })
+    navigate.navigate('Profile');
+
   //   const response = await fetch("http:localhost:8000/payment",{
   //     method:"POST",
   //     body: JSON.stringify({
