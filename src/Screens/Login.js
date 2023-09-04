@@ -25,6 +25,7 @@ const Login = () => {
 
   useEffect(() => {
     setloading(true);
+    
     const unsubscribe = auth.onAuthStateChanged((user) => {
       if (user) {
         navigate.navigate("Profile");
